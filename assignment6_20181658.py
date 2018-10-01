@@ -110,21 +110,31 @@ class ScoreDB(QWidget):
                 self.resultEdit.setPlainText("int형으로 입력해주세요")
 
         elif sender.text() == "Del": # Del 버튼이 눌렸을 때
-            for p in self.scoredb: #scoredb 를 p 에 담아서 반복
+            count = 0
+            for p in self.scoredb[:]: #scoredb 를 p 에 담아서 반복
                 if p['Name'] == self.nameEdit.text(): # p 에 입력한 name 이 있으면
+                    count+=1
                     self.scoredb.remove(p) # 제거한다.
-            self.showScoreDB()
+                if count == 0:
+                    self.resultEdit.setText("없는 name입니다.")
+                else:
+                    self.showScoreDB()
             #except IndexError:
                 #self.resultEdit.setPlainText("DB안에 있는 name을 써주세요")
 
         elif sender.text() == "Find": # Find 버튼이 눌렸을 때
+            count = 0
             for p in self.scoredb: #scoredb 를 p 에 담아서 반복
                 if p['Name'] == self.nameEdit.text():  #p 에 입력한 name 이 있으면
+                    count += 1 # count 증가
                     b.append(p) # 위에서 만든 리스트 b에 p를 추가한다.
-            a = self.scoredb # a에 저장
-            self.scoredb = b # scoredb에 b 를 담는다.
-            self.showScoreDB() # 보여준다
-            self.scoredb = a # scoredb에 a 를 담는다. 이렇게 안하면 b만 남아있음
+                if count == 0: # count 가 0 이면 
+                    self.resultEdit.setText("없는 name입니다.")
+                else:
+                    a = self.scoredb # a에 저장
+                    self.scoredb = b # scoredb에 b 를 담는다.
+                    self.showScoreDB() # 보여준다
+                    self.scoredb = a # scoredb에 a 를 담는다. 이렇게 안하면 b만 남아있음
 
         elif sender.text() == "Inc": # Inc 버튼이 눌렸을 때
             for p in self.scoredb: #scoredb 를 p 에 담아서 반복
@@ -170,7 +180,7 @@ class ScoreDB(QWidget):
     def showScoreDB(self):
         section = '' #올때마다 초기화
 
-        keyname = self.keyEdit.currentText() # 현재 텍스츠를 그대로 가져온다. 없으면 망함니다.
+        keyname = self.keyEdit.currentText() # 현재 콤보 박스에 지정된 텍스트를 그대로 가져온다. 없으면 망함니다.
 
         for p in sorted(self.scoredb, key=lambda person: person[keyname]): # 형식 맞추기
             for attr in sorted(p):
