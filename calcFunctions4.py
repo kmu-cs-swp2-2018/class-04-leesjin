@@ -49,22 +49,27 @@ def decToRoman(numStr):
     return result
 
 def romanToDec(numStr):
+    try:
+        n = str(numStr)
+    except:
+        return 'Error!'
+    result = 0
 
-    b = list(numStr)
-    n = 0
-    c = []
     romans = [
         (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
         (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
         (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'),
         (1, 'I')
-    ]
+        ]
 
-    for value, letters in romans:
-        for i in range(len(b)):
-            if b[i] == letters:
-                c = b[i]
-                n += value
-                #print(n)
-                del (c)
-    return n
+    for i in range(len(n)):
+        for value, letters in romans:
+            if n.find(letters) == 0:
+                result += value
+                if len(letters) == 1:
+                    n = n[1:]
+                elif len(letters) == 2:
+                    n = n[2:]
+    return result
+
+   
