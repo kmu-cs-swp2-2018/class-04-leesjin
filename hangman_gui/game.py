@@ -109,44 +109,29 @@ class HangmanGame(QWidget):
 
         if self.gameOver == True:
             self.message.setText("게임이 종료되었습니다.")
-            # 메시지 출력하고 - message.setText() - 리턴
 
         if len(guessedChar) != 1:
             self.message.setText("문자길이가 1이 아닙니다.")
-        # 입력의 길이가 1 인지를 판단하고, 아닌 경우 메시지 출력, 리턴
 
         if guessedChar in self.guess.guessedChars:
             self.message.setText("이미 사용한 문자입니다.")
-        # 이미 사용한 글자인지를 판단하고, 아닌 경우 메시지 출력, 리턴
 
         success = self.guess.guess(guessedChar)
         if success == False:
             self.hangman.decreaseLife()
             self.message.setText("목숨이 1개 감소되었습니다.")
-            # 남아 있는 목숨을 1 만큼 감소
 
-            # 메시지 출력
-            pass
-
-        # hangmanWindow 에 현재 hangman 상태 그림을 출력
-        # currentWord 에 현재까지 부분적으로 맞추어진 단어 상태를 출력
-        # guessedChars 에 지금까지 이용한 글자들의 집합을 출력
         self.hangmanWindow.setPlaceholderText(self.hangman.currentShape())
         self.currentWord.setText(self.guess.displayCurrent())
         self.guessedChars.setText(self.guess.displayGuessed())
 
         if self.guess.finished():
-            # 메시지 ("Success!") 출력하고, self.gameOver 는 True 로
             self.message.setText("Success!")
             self.gameOver = True
-            pass
 
         elif self.hangman.getRemainingLives() == 0:
-            self.message.setText("Fail!" + self.guesssecretWord)
-            # 메시지 ("Fail!" + 비밀 단어) 출력하고, self.gameOver 는 True 로
+            self.message.setText("Fail! " + self.guess.secretWord)
             self.gameOver = True
-            pass
-
 
 if __name__ == '__main__':
 

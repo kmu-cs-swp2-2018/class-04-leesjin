@@ -28,9 +28,3 @@ class Word:
             randstr = self.words[r]
             if len(randstr) >= minLength:
                 return randstr
-
-'''
-if __name__ == "__main__":
-    word = Word("words.txt")
-    print(word.randFromDB(13))
-'''
